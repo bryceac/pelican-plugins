@@ -44,17 +44,10 @@ class FeedCReplaceWriter(Writer):
         else:
             super(FeedCReplaceWriter, self)._add_item_to_the_feed(feed, item)
 
-def set_feed_use_summary_default(pelican_object):
-    # modifying DEFAULT_CONFIG doesn't have any effect at this point in pelican setup
-    # everybody who uses DEFAULT_CONFIG is already used/copied it or uses the pelican_object.settings copy.
-
-    pelican_object.settings.setdefault('FEED_USE_SUMMARY', False)
-
 def patch_pelican_writer(pelican_object):
     @magic_set(pelican_object)
     def get_writer(self):
-        return FeedSummaryWriter(self.output_path,settings=self.settings)
+        return FeedCReplaceWriter(self.output_path,settings=self.settings)
 
 def register():
-    signals.initialized.connect(set_feed_use_summary_default)
     signals.initialized.connect(patch_pelican_writer)
