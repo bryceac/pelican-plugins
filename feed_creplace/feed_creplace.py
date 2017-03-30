@@ -26,7 +26,6 @@ class FeedCReplaceWriter(Writer):
     def _add_item_to_the_feed(self, feed, item):
         if (self.settings['FEED_CONTENT_SUBSTITUTE']) and (len(self.settings['FEED_CONTENT_SUBSTITUTE']) != 0):
             r = self.settings['FEED_CONTENT_SUBSTITUTE']
-            address = self.site_url
             title = Markup(item.title).striptags()
             link = '%s/%s' % (self.site_url, item.url)
             feed.add_item(
@@ -35,8 +34,8 @@ class FeedCReplaceWriter(Writer):
                 unique_id='tag:%s,%s:%s' % (urlparse(link).netloc,
                                             item.date.date(),
                                             urlparse(link).path.lstrip('/')),
-                description=item.get_content(self.url).replace(r, address),
-                content=item.get_content(self.site_url).replace(r, address),
+                description=item.get_content(self.site_url).replace(r, self.site_url),
+                content=item.get_content(self.site_url).replace(r, self.site_url),
                 categories=item.tags if hasattr(item, 'tags') else None,
                 author_name=getattr(item, 'author', ''),
                 pubdate=set_date_tzinfo(item.modified if hasattr(item, 'modified') else item.date,
