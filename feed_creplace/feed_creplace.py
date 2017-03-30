@@ -42,7 +42,7 @@ class FeedCReplaceWriter(Writer):
                 pubdate=set_date_tzinfo(item.modified if hasattr(item, 'modified') else item.date,
                     self.settings.get('TIMEZONE', None)))
         else:
-            super(FeedSummaryWriter, self)._add_item_to_the_feed(feed, item)
+            super(FeedCReplaceWriter, self)._add_item_to_the_feed(feed, item)
 
 def set_feed_use_summary_default(pelican_object):
     # modifying DEFAULT_CONFIG doesn't have any effect at this point in pelican setup
