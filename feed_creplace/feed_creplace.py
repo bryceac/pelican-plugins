@@ -25,8 +25,8 @@ from .magic_set import magic_set
 class FeedCReplaceWriter(Writer):
     def _add_item_to_the_feed(self, feed, item):
         if (self.settings['FEED_CONTENT_SUBSTITUTE']) and (len(self.settings['FEED_CONTENT_SUBSTITUTE']) != 0):
-            r = self.settings['FEED_CONTENT_SUBSTITUTE'];
-            address = context['SITEURL']
+            r = self.settings['FEED_CONTENT_SUBSTITUTE']
+            address = self.site_url
             title = Markup(item.title).striptags()
             link = '%s/%s' % (self.site_url, item.url)
             feed.add_item(
